@@ -5,8 +5,11 @@ const { v4: uuidv4 } = require("uuid");
 const { saveHasil, getHasil } = require("./firestore");
 const { loadModel, predict } = require("./inference");
 const path = require("path");
+const dotenv = require("dotenv");
 
+dotenv.config();
 const app = express();
+const host = process.env.HOST || "localhost";
 const port = process.env.PORT || 8080;
 
 app.use(cors());
@@ -125,6 +128,6 @@ app.use((err, req, res, next) => {
   next(err);
 });
 
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, host, () => {
   console.log(`Server running on port ${port}`);
 });
